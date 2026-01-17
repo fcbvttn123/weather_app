@@ -1,0 +1,18 @@
+import { axios } from "axios";
+
+// get user location
+navigator.geolocation.getCurrentPosition(getPositionSuccess, getPositionError);
+
+function getPositionSuccess({ coords }) {
+  getWeather(coords.latitude, coords.longitude);
+}
+
+function getPositionError() {
+  alert(
+    "There was an error getting your location. Please allow us to use your location and refresh the page",
+  );
+}
+
+function getWeather(lat, lon) {
+  console.log(lat, lon);
+}
