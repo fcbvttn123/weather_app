@@ -19,6 +19,10 @@ function getWeather(lat, lon) {
       params: { lat, lon },
     })
     .then((response) => {
-      console.log(response.data);
+      document.body.classList.remove("blurred");
+    })
+    .catch((err) => {
+      console.err(err);
+      alert("Error getting weather. Please try again.");
     });
 }
