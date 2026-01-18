@@ -2,6 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const axios = require("axios");
 require("dotenv").config();
+const {
+  parseCurrentWeather,
+  parseDailyWeather,
+  parseHourlyWeather,
+} = require("./utils");
 const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
@@ -19,7 +24,11 @@ app.get("/weather", (request, response) => {
       },
     })
     .then(({ data }) => {
-      response.json(data);
+      response.json({
+        current: parseCurrentWeather(data),
+        daily: parseDailyWeather(data),
+        hourly: parseHourlyWeather(data),
+      });
     })
     .catch((err) => {
       response.sendStatus(500);
