@@ -23,6 +23,7 @@ function getWeather(lat, lon) {
       document.body.classList.remove("blurred");
       renderCurrentWeather(data.current);
       renderDailyWeather(data.daily);
+      renderHourlyWeather(data.hourly);
     })
     .catch((err) => {
       console.error(err);
@@ -54,6 +55,23 @@ function renderDailyWeather(daily) {
     setValue("date", formatDay(day.timestamp), { parent: element });
     element.querySelector("[data-icon]").src = getIconUrl(day.icon);
     dailySection.append(element);
+  });
+}
+
+const hourlySection = document.querySelector("[data-hour-section]");
+const hourRowTemplate = document.getElementById("hour-row-template");
+function renderHourlyWeather(hourly) {
+  hourlySection.innerHTML = "";
+  hourly.forEach((hour) => {
+    const element = hourRowTemplate.content.cloneNode(true);
+    setValue("temp", hour.temp, { parent: element });
+    setValue("fl-temp", hour.feelsLike, { parent: element });
+    setValue("wind", hour.windSpeed, { parent: element });
+    setValue("precip", hour.precip, { parent: element });
+    setValue("day", formatDay(hour.timestamp), { parent: element });
+    setValue("time", formatTime(hour.timestamp), { parent: element });
+    element.querySelector("[data-icon]").src = getIconUrl(hour.icon);
+    hourlySection.append(element);
   });
 }
 
