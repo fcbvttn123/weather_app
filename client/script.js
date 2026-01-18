@@ -1,18 +1,19 @@
 import axios from "axios";
 import { format } from "date-fns";
 
-// get user location
-navigator.geolocation.getCurrentPosition(getPositionSuccess, getPositionError);
+// ================== main flow ==================
 
+navigator.geolocation.getCurrentPosition(getPositionSuccess, getPositionError);
 function getPositionSuccess({ coords }) {
   getWeather(coords.latitude, coords.longitude);
 }
-
 function getPositionError() {
   alert(
     "There was an error getting your location. Please allow us to use your location and refresh the page",
   );
 }
+
+// ================== helper functions ==================
 
 function getWeather(lat, lon) {
   axios
